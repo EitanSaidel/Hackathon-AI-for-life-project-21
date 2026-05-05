@@ -25,7 +25,6 @@ Each subfolder (named `BRaTS-GLI-{id}`), contains five `.gz` files. Namely:
 - `BRaTS-GLI-{id}-t2f.nii.gz` (FLAIR scan)
 - `BRaTS-GLI-{id}-t2w.nii.gz` (T2 scan)
 
-
 The purpose of each file is:
 - **T1** - baseline MRI scan, shows just the anatomy.
 - **T1c** (T1 contrast) - MRI scan after a contrast agent has been injected, highlights tissue growth.
@@ -34,3 +33,9 @@ The purpose of each file is:
 - **Segmentation mask** - manually drawn mask where each pixel has been labeled (e.g. "healthy tissue").
 
 > By combining these images, we can identify different tissue types.
+
+These will then be split into a training set (80%) and a validation set (20%).
+
+## Progress
+
+[x] Download and parse dataset
