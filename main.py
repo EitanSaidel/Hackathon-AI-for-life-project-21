@@ -108,3 +108,9 @@ for batch_data in train_loader:
     break
 
 print("\nData check complete.")
+import torch
+from monai.networks.nets import AutoencoderKL
+print("\nStarting VAE")
+device = torch.device()
+
+
