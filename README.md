@@ -4,9 +4,10 @@
 
 - `scikit-learn`
 - `monai`
+- `nibabel`
 
 ```bash
-pip install scikit-learn monai
+pip install scikit-learn monai nibabel
 ```
 
 ## Dataset
@@ -15,17 +16,21 @@ pip install scikit-learn monai
 
 > Requires an account
 
-A collection of patient scans, each includes four MRI scans:
+> Downloads `ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData.zip`, a collection of 1251 patient scans
 
-- **T1** - baseline scan
-- **T1c** (T1 contrast) - scan after a contrast agent has been injected
-- **T2** - scan sensitive to fluids
-- **FLAIR** (Fluid Attenuated Inversion Recovery) - scan timed to ignore fluids
+Each subfolder (named `BRaTS-GLI-{id}`), contains five `.gz` files. Namely:
+- `BRaTS-GLI-{id}-seg.nii.gz` (Segmentation mask)
+- `BRaTS-GLI-{id}-t1c.nii.gz` (T1 constrast scan)
+- `BRaTS-GLI-{id}-t1n.nii.gz` (T1 scan)
+- `BRaTS-GLI-{id}-t2f.nii.gz` (FLAIR scan)
+- `BRaTS-GLI-{id}-t2w.nii.gz` (T2 scan)
 
-**T1** just shows the anatomy. **T1c** shows where there is tissue growth. **T2** shows were there is swelling. **FLAIR** highlights abnomal tissues.
+
+The purpose of each file is:
+- **T1** - baseline MRI scan, shows just the anatomy.
+- **T1c** (T1 contrast) - MRI scan after a contrast agent has been injected, highlights tissue growth.
+- **T2** - MRI scan sensitive to fluids, highlights inflamation.
+- **FLAIR** (Fluid Attenuated Inversion Recovery) - MRI scan timed to ignore fluids, highlights absormal tissue.
+- **Segmentation mask** - manually drawn mask where each pixel has been labeled (e.g. "healthy tissue").
 
 > By combining these images, we can identify different tissue types.
-
-Additionaly, there is a _segmentation mask_. This is a manually drawn mask where each pixel has been labeled (e.g. "healthy tissue").
-
-## Progress
