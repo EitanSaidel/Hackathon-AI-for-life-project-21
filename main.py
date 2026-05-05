@@ -69,7 +69,9 @@ train_transforms = Compose(
     ]
 )
 train_ds = Dataset(data=train_files, transform=train_transforms)
-train_loader = DataLoader(train_ds, batch_size=1, num_workers=0)
+train_loader = DataLoader(
+    train_ds, batch_size=config.BATCH_SIZE, num_workers=config.NUM_WORKERS
+)
 
 print("\nPipeline built successfully")
 print("\nFetching the first patient through the pipeline")
@@ -88,7 +90,7 @@ train_transforms = Compose(
         CropForegroundd(keys=["image", "label"], source_key="image"),
         NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
         RandSpatialCropd(
-            keys=["image", "label"], roi_size=[128, 128, 128], random_size=False
+            keys=["image", "label"], roi_size=config.ROI_SIZE, random_size=False
         ),
         EnsureTyped(keys=["image", "label"]),
     ]
