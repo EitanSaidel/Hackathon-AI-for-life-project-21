@@ -108,10 +108,62 @@ for batch_data in train_loader:
     break
 
 print("\nData check complete.")
+
 import torch
-print("\nStarting VAE")
-device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
-print(f"Using computing device: {device}")
+from monai.networks.nets import AutoencoderKL
+
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+print(f"Using device: {device}")
+
+vae = AutoencoderKL(
+    spatial_dims=3,
+    in_channels=4,
+    out_channels=4,
+    latent_channels=4,
+    channels=(32, 64, 128),
+    num_res_blocks=1,
+    norm_num_groups=16,
+    attention_levels=(False, False, True),
+).to(device)
+
+vae.eval()
+
+inputs = inputs.to(device)
+with torch.no_grad():
+    latent_space = vae.encode_stage_2_inputs(inputs)
+
+print(f"Original Volume: {inputs.shape}")
+print(f"Compressed Latent Space: {latent_space.shape}")
+
+from monai.networks.nets import DiffusionModelUNet
+from monai.networks.schedulers import DDPMScheduler
+
+print("\nInitializing the Latent Diffusion Model (LDM)")
+
+scheduler = DDPMScheduler(
+    num_train_timesteps=1000,
+    schedule="linear_beta",
+    beta_start=0.0015,
+    beta_end=0.0195,
+)
+
+unet = DiffusionModelUNet(
+    spatial_dims=3,
+    in_channels=4,
+    out_channels=4,
+    num_res_blocks=1,
+    channels=(32, 64, 64),
+    attention_levels=(False, True, True),
+    num_head_channels=(0, 32, 32),
+).to(device)
+
+unet.eval()
+
+print(" Diffusion Engine successfully initialized!")
+
+pytorch_total_params = sum(p.numel() for p in unet.parameters() if p.requires_grad)
+print(f"Total trainable parameters in UNet: {pytorch_total_params:,}")
+
 
 
 
