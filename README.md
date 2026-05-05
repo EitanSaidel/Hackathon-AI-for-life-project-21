@@ -1,5 +1,9 @@
 # Generative AI for Medical Imaging
 
+## Enviroment
+
+- `scikit-learn`
+- `monai`
 
 ## Dataset
 
