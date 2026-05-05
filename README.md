@@ -12,13 +12,13 @@ pip install scikit-learn monai nibabel
 
 ## Dataset
 
+Download `ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData.zip`, a collection of 1251 patient scans
+
 [BRaTS 2023](https://www.synapse.org/Synapse:syn51514105) (**training** data, 12.3 GB)
 
 > Requires an account
 
-> Downloads `ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData.zip`, a collection of 1251 patient scans
-
-Each subfolder (named `BRaTS-GLI-{id}`), contains five `.gz` files. Namely:
+Each subfolder (named `BRaTS-GLI-{id}`), contains five `.nii.gz` files. Namely:
 - `BRaTS-GLI-{id}-seg.nii.gz` (Segmentation mask)
 - `BRaTS-GLI-{id}-t1c.nii.gz` (T1 contrast scan)
 - `BRaTS-GLI-{id}-t1n.nii.gz` or `BRaTS-GLI-{id}-t1.nii.gz` (T1 scan)
@@ -38,5 +38,6 @@ These will then be split into a training set (80%) and a validation set (20%).
 
 ## Progress
 
-[x] Download and parse dataset
-[ ] Build variational autoencoder (VAE)
+- [x] Download and parse dataset
+
+- [ ] Build variational autoencoder (VAE)
