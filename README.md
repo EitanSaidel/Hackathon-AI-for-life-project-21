@@ -39,3 +39,4 @@ These will then be split into a training set (80%) and a validation set (20%).
 ## Progress
 
 [x] Download and parse dataset
+[ ] Build variational autoencoder (VAE)
