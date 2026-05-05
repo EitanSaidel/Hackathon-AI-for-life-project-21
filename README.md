@@ -20,8 +20,8 @@ pip install scikit-learn monai nibabel
 
 Each subfolder (named `BRaTS-GLI-{id}`), contains five `.gz` files. Namely:
 - `BRaTS-GLI-{id}-seg.nii.gz` (Segmentation mask)
-- `BRaTS-GLI-{id}-t1c.nii.gz` (T1 constrast scan)
-- `BRaTS-GLI-{id}-t1n.nii.gz` (T1 scan)
+- `BRaTS-GLI-{id}-t1c.nii.gz` (T1 contrast scan)
+- `BRaTS-GLI-{id}-t1n.nii.gz` or `BRaTS-GLI-{id}-t1.nii.gz` (T1 scan)
 - `BRaTS-GLI-{id}-t2f.nii.gz` (FLAIR scan)
 - `BRaTS-GLI-{id}-t2w.nii.gz` (T2 scan)
 
