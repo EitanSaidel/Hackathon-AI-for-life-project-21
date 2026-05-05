@@ -41,3 +41,11 @@ These will then be split into a training set (80%) and a validation set (20%).
 - [x] Download and parse dataset
 
 - [ ] Build variational autoencoder (VAE)
+
+## Process
+
+1. Load data and fix a 128^3 image for each scan
+2. Compress to 'latent space' via a VAE (raw pixel data is too large for computations)
+3. ...
+4. Revert to a 3D via (again via VAE)
+5. Manually confirm outputs
