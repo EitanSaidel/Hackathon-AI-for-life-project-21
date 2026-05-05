@@ -1,7 +1,23 @@
-import os
 import glob
+import os
+import sys
+
+import torch
+from monai.data import DataLoader, Dataset
+from monai.transforms import (
+    Compose,
+    CropForegroundd,
+    EnsureChannelFirstd,
+    EnsureTyped,
+    LoadImaged,
+    NormalizeIntensityd,
+    RandSpatialCropd,
+)
 from sklearn.model_selection import train_test_split
-data_root = "/Users/eitansaidel/Downloads/ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData"
+
+import config
+
+data_root = config.DATA_ROOT
 patient_folders = sorted(glob.glob(os.path.join(data_root, "BraTS-GLI-*")))
 datalist = []
 
@@ -25,7 +41,7 @@ for folder in patient_folders:
         continue
     patient_entry = {
         "image": [t1_files[0], t1c_files[0], t2_files[0], flair_files[0]],
-        "label": seg_files[0]
+        "label": seg_files[0],
     }
     datalist.append(patient_entry)
 
@@ -38,16 +54,8 @@ if len(datalist) > 0:
     print(train_files[0])
 else:
     print(" No patients were added.")
+    sys.exit()
 
-from monai.transforms import (
-    Compose,
-    LoadImaged,
-    EnsureChannelFirstd,
-    CropForegroundd,
-    NormalizeIntensityd,
-    EnsureTyped
-)
-from monai.data import Dataset, DataLoader
 
 print("\nBuilding the MONAI Transform Pipeline")
 
@@ -71,16 +79,7 @@ for batch_data in train_loader:
     print(f"Loaded Label Shape: {labels.shape}")
     break
 print("\nData check complete.")
-from monai.transforms import (
-    Compose,
-    LoadImaged,
-    EnsureChannelFirstd,
-    CropForegroundd,
-    NormalizeIntensityd,
-    RandSpatialCropd,
-    EnsureTyped
-)
-from monai.data import Dataset, DataLoader
+
 print("\nBuilding the updated MONAI Transform Pipeline...")
 train_transforms = Compose(
     [
@@ -89,11 +88,8 @@ train_transforms = Compose(
         CropForegroundd(keys=["image", "label"], source_key="image"),
         NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
         RandSpatialCropd(
-            keys=["image", "label"],
-            roi_size=[128, 128, 128],
-            random_size=False
+            keys=["image", "label"], roi_size=[128, 128, 128], random_size=False
         ),
-
         EnsureTyped(keys=["image", "label"]),
     ]
 )
@@ -108,14 +104,13 @@ for batch_data in train_loader:
     break
 
 print("\nData check complete.")
-import torch
-from monai.networks.nets import AutoencoderKL
+
 print("\nStarting VAE")
-device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
+device = torch.device(
+    "cuda"
+    if torch.cuda.is_available()
+    else "mps"
+    if torch.backends.mps.is_available()
+    else "cpu"
+)
 print(f"Using computing device: {device}")
-
-
-
-
-
-
