@@ -1,4 +1,7 @@
-# Dataset
+# Generative AI for Medical Imaging
+
+
+## Dataset
 
 Link to Dataset: https://www.synapse.org/Synapse:syn51514105
 
