@@ -1,5 +1,7 @@
 # Generative AI for Medical Imaging
 
+[Presentation](https://canva.link/ujw5v02wmnhomyc)
+
 ## Enviroment
 
 - `scikit-learn`
