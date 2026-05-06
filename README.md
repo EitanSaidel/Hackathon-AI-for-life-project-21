@@ -5,9 +5,11 @@
 - `scikit-learn`
 - `monai`
 - `nibabel`
+- `monai-generative`
+- `einops`
 
 ```bash
-pip install scikit-learn monai nibabel
+pip install scikit-learn monai nibabel monai-generative einops
 ```
 
 ## Dataset
